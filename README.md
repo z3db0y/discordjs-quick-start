@@ -28,5 +28,4 @@ module.exports = class extends Command {
 }
 ```
 
-Note: cooldowns don't work yet, will add if see necessary.
-Store TOKEN as env variable.
+Note: Store token in TOKEN environment variable.
