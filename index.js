@@ -4,8 +4,7 @@ const client = new Discord.Client({ intents: [ 'DIRECT_MESSAGES', 'DIRECT_MESSAG
 const config = require('./config.json');
 const fs = require('fs');
 const fetch = require('node-fetch');
-const { writeGuildConfig, readGuildConfig } = require('./config.js');
-const Command = require('./command');
+const { writeGuildConfig, readGuildConfig, getCommands } = require('./utils.js');
 const oconsole = Object.assign({}, console);
 const token = process.env.TOKEN;
 
@@ -38,12 +37,8 @@ function initiator() {
         let botOwner = json.owner;
 
         console.log('Loading commands...');
-        fs.readdirSync('./commands').forEach(file => {
-            if(!fs.statSync(`commands/${file}`).isFile() || !file.endsWith('.js')) return;
-            const command = require(`./commands/${file}`);
-            if(!command.prototype || !(command.prototype instanceof Command)) return;
-            commands.push(new command());
-        });
+        commands = getCommands();
+        console.log('Loaded ' + (commands.length+'').cyan + ' command(s).');
         client.on('messageCreate', message => {
             const config = readGuildConfig(message.guild.id) || config;
             if(message.content.startsWith(config.prefix)) {
