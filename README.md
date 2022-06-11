@@ -50,4 +50,4 @@ readUserData('12345678901234567');
 // Write data of user with ID 12345678901234567.
 writeUserData('12345678901234567', { linkedAccounts: {} });
 ```
-Note: Store token in TOKEN environment variable.
+Note: Store token in TOKEN environment variable or `.env` file. (Syntax: `TOKEN=YOUR_TOKEN`)
