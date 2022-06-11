@@ -13,6 +13,7 @@ class Command{
         this.cooldown = opts.cooldown || 0;
         this.guildOnly = opts.guildOnly || false;
         this.dmOnly = opts.dmOnly || false;
+        this.category = opts.category || null;
 
         for(var k in this) {
             Object.freeze(this[k]);
