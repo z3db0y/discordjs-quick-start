@@ -50,13 +50,14 @@ function initiator() {
                 if(!command) return;
 
                 if(command.devOnly && botOwner.id !== message.author.id) return;
-                if(command.adminOnly && !message.member.hasPermission('ADMINISTRATOR') && message.author.id !== botOwner.id) return message.reply({ embeds: [{
+                if(command.guildOnly && !message.guild) return;
+                if(command.adminOnly && !message.guild || command.adminOnly && !message.member.hasPermission('ADMINISTRATOR') && message.author.id !== botOwner.id) return message.reply({ embeds: [{
                     title: 'Error!',
                     color: 0xFF0000,
                     description: 'You do not have permission to use this command.'
                 }], allowedMentions: { repliedUser: false } });
 
-                if(command.nsfwOnly && !message.channel.nsfw) return message.reply({ embeds: [{
+                if(command.nsfwOnly && !message.guild || command.nsfwOnly && !message.channel.nsfw) return message.reply({ embeds: [{
                     title: 'Error!',
                     color: 0xFF0000,
                     description: 'This command can only be used in a NSFW channel.'
