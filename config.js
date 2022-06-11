@@ -7,7 +7,7 @@ function readGuildConfig(guildId) {
         if(!lastCached[guildId] || lastCached[guildId].time > fs.statSync(`./guilds/${guildId}.json`).mtimeMs) {
             lastCached[guildId] = {
                 time: Date.now(),
-                config: fs.readFileSync(`./guilds/${guildId}.json`)
+                config: JSON.parse(fs.readFileSync(`./guilds/${guildId}.json`))
             }
         }
     } else {

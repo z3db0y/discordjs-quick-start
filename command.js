@@ -1,14 +1,16 @@
 module.exports = 
 class Command{
-    constructor(name, description, usage, aliases, adminOnly = 0, nsfwOnly = 0, devOnly = 0, cooldown = 0) {
-        this.name = name;
-        this.description = description;
-        this.usage = usage;
-        this.aliases = aliases;
-        this.adminOnly = adminOnly;
-        this.nsfwOnly = nsfwOnly;
-        this.devOnly = devOnly;
-        this.cooldown = cooldown;
+    constructor(opts) {
+        opts = opts || {};
+
+        this.name = opts.name || null;
+        this.aliases = opts.aliases || [];
+        this.description = opts.description || null;
+        this.usage = opts.usage || null;
+        this.adminOnly = opts.adminOnly || false;
+        this.devOnly = opts.devOnly || false;
+        this.nsfwOnly = opts.nsfwOnly || false;
+        this.cooldown = opts.cooldown || 0;
 
         for(var k in this) {
             Object.freeze(this[k]);

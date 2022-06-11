@@ -59,8 +59,22 @@ function initiator() {
                     color: 0xFF0000,
                     description: 'You do not have permission to use this command.'
                 }], allowedMentions: { repliedUser: false } });
-                
+
+                if(command.nsfwOnly && !message.channel.nsfw) return message.reply({ embeds: [{
+                    title: 'Error!',
+                    color: 0xFF0000,
+                    description: 'This command can only be used in a NSFW channel.'
+                }], allowedMentions: { repliedUser: false } });
+
+                if(lastRun[message.guildId] && lastRun[message.guildId][cmd] + command.cooldown > Date.now()) return message.reply({ embeds: [{
+                    title: 'Error!',
+                    color: 0xFF0000,
+                    description: 'This command is on cooldown. Please wait ' + ((command.cooldown - (Date.now() - lastRun[message.guildId][cmd])) / 1000).toFixed(0) + ' seconds before using this command again.'
+                }], allowedMentions: { repliedUser: false } });
+
                 command.run(message, args);
+                lastRun[message.guildId] = lastRun[message.guildId] || {};
+                lastRun[message.guildId][cmd] = Date.now();
                 console.log('Command ' + command.name.cyan + ' was run by ' + message.author.tag.cyan);
             }
         });
@@ -68,5 +82,9 @@ function initiator() {
     });
     
 }
+
+process.on('uncaughtException', (err) => {
+    console.error('Uncaught exception:', err);
+});
 
 client.login(token);
