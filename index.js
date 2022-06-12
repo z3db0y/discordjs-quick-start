@@ -52,7 +52,7 @@ function initiator() {
                 if(command.devOnly && botOwner.id !== message.author.id) return;
                 if(command.guildOnly && !message.guild) return;
                 if(command.dmOnly && message.guild) return;
-                if(command.adminOnly && !message.guild || command.adminOnly && !message.member.hasPermission('ADMINISTRATOR') && message.author.id !== botOwner.id) return message.reply({ embeds: [{
+                if(command.adminOnly && !message.guild || command.adminOnly && !message.member.permissions.has('ADMINISTRATOR') && message.author.id !== botOwner.id) return message.reply({ embeds: [{
                     title: 'Error!',
                     color: 0xFF0000,
                     description: 'You do not have permission to use this command.'
